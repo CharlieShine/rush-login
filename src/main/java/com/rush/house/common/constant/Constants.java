@@ -14,6 +14,8 @@ public class Constants {
     public static final List<String> NO_AUTH_APIS = new ArrayList<>();
     static {
         NO_AUTH_APIS.add("/user/needLogin");
+        NO_AUTH_APIS.add("/user/login");
+        NO_AUTH_APIS.add("/user/register");
     }
 
     public static final String MD5_SALT = "433d2d24";

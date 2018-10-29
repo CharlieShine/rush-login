@@ -46,7 +46,7 @@ public class SessionUtil {
         if (u == null) {
             return null;
         }
-        return JSON.parseObject(u.toString(), User.class);
+        return JSON.parseObject(JSON.toJSONString(u), User.class);
     }
 
     public static Boolean setUser (HttpServletRequest req, User user) {

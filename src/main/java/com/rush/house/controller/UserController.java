@@ -62,6 +62,38 @@ public class UserController {
     }
 
     /**
+     * 用户注册
+     * @param req
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/user/register", method = {RequestMethod.GET, RequestMethod.POST})
+    public JSONResult register (@RequestParam(name = "username", required = false) String username,
+                                @RequestParam(name = "password", required = false) String password,
+                                HttpServletRequest req) {
+        try {
+            if (StringUtils.isBlank(username)) {
+                return new JSONResult(false, "用户名不能为空!");
+            }
+            if (StringUtils.isBlank(password)) {
+                return new JSONResult(false, "密码不能为空!");
+            }
+            User user = userService.selectByUserName(username);
+            if (user != null) {
+                return new JSONResult(false, "用户已存在!");
+            }
+            user = new User();
+            user.setUsername(username);
+            user.setPassword(passwordEncode(username, password));
+            userService.insert(user);
+            return new JSONResult(user, "用户注册成功!", true);
+        } catch (Exception e) {
+            log.error("用户注册异常", e);
+            return new JSONResult(false, "用户注册异常:" + e.getMessage());
+        }
+    }
+
+    /**
      * 用户登录
      * @param username
      * @param password
@@ -84,8 +116,7 @@ public class UserController {
             if (user == null) {
                 return new JSONResult(false, "用户不存在!");
             }
-            password = StrUtils.md5(username + Constants.MD5_SALT + password);
-            if  (!user.getPassword().equals(password)) {
+            if  (!user.getPassword().equals(passwordEncode(username, password))) {
                 return new JSONResult(false, "密码错误!");
             }
             HttpSession session = req.getSession();
@@ -120,5 +151,10 @@ public class UserController {
             log.error("查询联系人异常", e);
             return new JSONResult(false, "查询联系人异常:" + e.getMessage());
         }
+    }
+
+    private String passwordEncode (String username, String password) {
+        password = StrUtils.md5(username + Constants.MD5_SALT + password);
+        return password;
     }
 }

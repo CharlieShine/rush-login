@@ -3,6 +3,7 @@ package com.rush.house.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.rush.house.common.constant.Constants;
+import com.rush.house.common.util.SessionUtil;
 import com.rush.house.entity.User;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -48,13 +49,7 @@ public class LoginFilter implements Filter {
         /**
          * 验证用户session
          */
-        HttpSession session = request.getSession();
-        Object userSession = session.getAttribute("user");
-        if (userSession == null) {
-            redirectToLogin(response);
-            return;
-        }
-        User user = JSON.parseObject(userSession.toString(), User.class);
+        User user = SessionUtil.getUser(request);
         if (user == null || StringUtils.isBlank(user.getUsername())) {
             redirectToLogin(response);
             return;

@@ -1,6 +1,6 @@
 package com.rush.house.service;
 
-import com.rush.house.entity.Contact;
+import com.rush.house.entity.User;
 import com.baomidou.mybatisplus.service.IService;
 
 /**
@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.service.IService;
  * @author licl
  * @since 2018-10-29
  */
-public interface ContactService extends IService<Contact> {
+public interface UserService extends IService<User> {
 
+    User selectByUserName(String username);
 }

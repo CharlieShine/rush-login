@@ -3,13 +3,7 @@ package com.rush.house.entity;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import org.apache.ibatis.annotations.Mapper;
-
 import java.io.Serializable;
 
 /**
@@ -20,21 +14,21 @@ import java.io.Serializable;
  * @author licl
  * @since 2018-10-29
  */
-@TableName("house_contact")
-public class Contact extends Model<Contact> {
+@TableName("house_user")
+public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonSerialize(using = ToStringSerializer.class)
-    @TableId(value="id", type= IdType.ID_WORKER)
     private Long id;
     @TableField("insert_time")
     private Date insertTime;
     @TableField("update_time")
     private Date updateTime;
+    private String username;
+    private String password;
     private String mobile;
-    private String name;
-    private String remark;
+    private String gender;
+    private String nick;
 
 
     public Long getId() {
@@ -61,6 +55,22 @@ public class Contact extends Model<Contact> {
         this.updateTime = updateTime;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -69,20 +79,20 @@ public class Contact extends Model<Contact> {
         this.mobile = mobile;
     }
 
-    public String getName() {
-        return name;
+    public String getGender() {
+        return gender;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getNick() {
+        return nick;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
     @Override
@@ -92,13 +102,15 @@ public class Contact extends Model<Contact> {
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "User{" +
         ", id=" + id +
         ", insertTime=" + insertTime +
         ", updateTime=" + updateTime +
+        ", username=" + username +
+        ", password=" + password +
         ", mobile=" + mobile +
-        ", name=" + name +
-        ", remark=" + remark +
+        ", gender=" + gender +
+        ", nick=" + nick +
         "}";
     }
 }

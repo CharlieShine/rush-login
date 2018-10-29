@@ -1,5 +1,6 @@
 package com.rush.house.common.util;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +49,19 @@ public class StrUtils {
         Pattern pattern = Pattern.compile("(http[s]?:)?//[\\w./?=&]*");
         Matcher matcher = pattern.matcher(src);
         return matcher.matches();
+    }
+
+    public static String md5 (String src) {
+        try {
+            if (src == null || src.trim().length() < 1) {
+                return null;
+            }
+            String result = new String(DigestUtils.md5Hex(src));
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

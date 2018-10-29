@@ -1,13 +1,13 @@
 package com.rush.house.generator;
-//import com.baomidou.mybatisplus.generator.AutoGenerator;
-//import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-//import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-//import com.baomidou.mybatisplus.generator.config.PackageConfig;
-//import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-//import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
-//import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-//import com.baomidou.mybatisplus.generator.config.rules.DbType;
-//import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
  * <p>
@@ -22,7 +22,7 @@ public class MyGenerator {
      * </p>
      */
     public static void main(String[] args) {
-        /*AutoGenerator mpg = new AutoGenerator();
+        AutoGenerator mpg = new AutoGenerator();
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
@@ -63,11 +63,10 @@ public class MyGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setParent("com");
         pc.setModuleName("rush.house");
-        pc.setMapper("dao");
         mpg.setPackageInfo(pc);
 
         // 执行生成
-        mpg.execute();*/
+        mpg.execute();
 
     }
 

@@ -16,6 +16,7 @@ public class Constants {
         NO_AUTH_APIS.add("/user/needLogin");
         NO_AUTH_APIS.add("/user/login");
         NO_AUTH_APIS.add("/user/register");
+        NO_AUTH_APIS.add("/contact/add");
     }
 
     public static final String MD5_SALT = "433d2d24";

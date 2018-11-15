@@ -34,6 +34,7 @@ public class Contact extends Model<Contact> {
     private Date updateTime;
     private String mobile;
     private String name;
+    private String gender;
     private String remark;
 
 
@@ -77,6 +78,14 @@ public class Contact extends Model<Contact> {
         this.name = name;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -98,6 +107,7 @@ public class Contact extends Model<Contact> {
         ", updateTime=" + updateTime +
         ", mobile=" + mobile +
         ", name=" + name +
+        ", gender=" + gender +
         ", remark=" + remark +
         "}";
     }

@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface ContactService extends IService<Contact> {
 
+    Contact selectByMobile(String mobile);
 }

@@ -21,7 +21,7 @@ public class WebConfig {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(filter);
         List<String> urlPatterns = new ArrayList<String>();
-        urlPatterns.add("/user/*");//拦截路径，可以添加多个
+        urlPatterns.add("/*");//拦截路径，可以添加多个
         registrationBean.setUrlPatterns(urlPatterns);
         registrationBean.setOrder(1);
         return registrationBean;

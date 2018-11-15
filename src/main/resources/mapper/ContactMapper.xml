@@ -9,6 +9,7 @@
         <result column="update_time" property="updateTime" />
         <result column="mobile" property="mobile" />
         <result column="name" property="name" />
+        <result column="gender" property="gender" />
         <result column="remark" property="remark" />
     </resultMap>
 

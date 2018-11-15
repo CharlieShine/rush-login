@@ -130,26 +130,19 @@ public class UserController {
     }
 
     /**
-     * 查询联系人
+     * 退出登录
      * @param req
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/user/getContacts", method = {RequestMethod.GET, RequestMethod.POST})
-    public JSONResult getContacts (@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
-                                   HttpServletRequest req) {
+    @RequestMapping(value = "/user/logout", method = RequestMethod.POST)
+    public JSONResult login (HttpServletRequest req) {
         try {
-            EntityWrapper<Contact> wrapper = new EntityWrapper<>();
-            wrapper.where(" 1 = 1 ");
-            Page<Contact> page = new Page<>();
-            page.setCurrent(pageNo);
-            page.setSize(pageSize);
-            page = contactService.selectPage(page, wrapper);
-            return new JSONResult(page, "查询联系人成功!", true);
+            SessionUtil.clearSession(req);
+            return new JSONResult(true, "退出登录成功!");
         } catch (Exception e) {
-            log.error("查询联系人异常", e);
-            return new JSONResult(false, "查询联系人异常:" + e.getMessage());
+            log.error("退出登录异常", e);
+            return new JSONResult(false, "退出登录异常:" + e.getMessage());
         }
     }
 

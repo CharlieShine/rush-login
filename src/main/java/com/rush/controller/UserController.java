@@ -7,7 +7,6 @@ import com.rush.common.util.JWTUtil;
 import com.rush.common.util.SessionUtil;
 import com.rush.common.util.StrUtils;
 import com.rush.entity.User;
-import com.rush.service.ContactService;
 import com.rush.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -30,8 +29,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private ContactService contactService;
 
     /**
      * 登录拦截重定向地址

@@ -2,7 +2,7 @@ package com.rush.common.result;
 
 public class ResponseBean {
 
-    // http 状态码
+    // 状态码
     private int code;
 
     // 返回信息
@@ -15,6 +15,12 @@ public class ResponseBean {
         this.code = code;
         this.msg = msg;
         this.data = data;
+    }
+
+    public ResponseBean(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+        this.data = null;
     }
 
     public int getCode() {

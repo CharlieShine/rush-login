@@ -2,7 +2,7 @@ package com.rush.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.rush.common.constant.Constants;
-import com.rush.common.result.JSONResult;
+import com.rush.common.result.ResponseBean;
 import com.rush.common.util.JWTUtil;
 import com.rush.common.util.SessionUtil;
 import com.rush.common.util.StrUtils;
@@ -31,16 +31,6 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 登录拦截重定向地址
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/user/needLogin", method = {RequestMethod.GET, RequestMethod.POST})
-    public JSONResult needLogin () {
-        return new JSONResult(false, "非常抱歉, 您需要登录后才能继续操作!");
-    }
-
-    /**
      * 获取用户信息
      * @param req
      * @return
@@ -49,18 +39,18 @@ public class UserController {
     @RequestMapping(value = "/user/info", method = {RequestMethod.GET, RequestMethod.POST})
     @RequiresAuthentication
     @RequiresRoles(value = {Constants.ROLE_ADMIN}, logical = Logical.OR)
-    public JSONResult info (HttpServletRequest req) {
+    public ResponseBean info (HttpServletRequest req) {
         try {
             User user = SessionUtil.getUser(req);
             Subject subject = SecurityUtils.getSubject();
             if (subject.isAuthenticated()) {
-                return new JSONResult(true, "You are already logged in");
+                return new ResponseBean(Constants.CODE_SUCCESS, "You are already logged in");
             } else {
-                return new JSONResult(true, "You are guest");
+                return new ResponseBean(Constants.CODE_SUCCESS, "You are guest");
             }
         } catch (Exception e) {
             log.error("获取用户信息异常", e);
-            return new JSONResult(false, "获取用户信息异常:" + e.getMessage());
+            return new ResponseBean(Constants.CODE_ERROR, "获取用户信息异常:" + e.getMessage());
         }
     }
 
@@ -71,28 +61,28 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/user/register", method = {RequestMethod.GET, RequestMethod.POST})
-    public JSONResult register (@RequestParam(name = "username", required = false) String username,
+    public ResponseBean register (@RequestParam(name = "username", required = false) String username,
                                 @RequestParam(name = "password", required = false) String password,
                                 HttpServletRequest req) {
         try {
             if (StringUtils.isBlank(username)) {
-                return new JSONResult(false, "用户名不能为空!");
+                return new ResponseBean(Constants.CODE_ERROR, "用户名不能为空!");
             }
             if (StringUtils.isBlank(password)) {
-                return new JSONResult(false, "密码不能为空!");
+                return new ResponseBean(Constants.CODE_ERROR, "密码不能为空!");
             }
             User user = userService.selectByUserName(username);
             if (user != null) {
-                return new JSONResult(false, "用户已存在!");
+                return new ResponseBean(Constants.CODE_ERROR, "用户已存在!");
             }
             user = new User();
             user.setUsername(username);
             user.setPassword(passwordEncode(username, password));
             userService.insert(user);
-            return new JSONResult(user, "用户注册成功!", true);
+            return new ResponseBean(Constants.CODE_SUCCESS, "用户注册成功!");
         } catch (Exception e) {
             log.error("用户注册异常", e);
-            return new JSONResult(false, "用户注册异常:" + e.getMessage());
+            return new ResponseBean(Constants.CODE_ERROR, "用户注册异常:" + e.getMessage());
         }
     }
 
@@ -106,33 +96,30 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     @RequiresGuest
-    public JSONResult login (@RequestParam(name = "username", required = false) String username,
+    public ResponseBean login (@RequestParam(name = "username", required = false) String username,
                              @RequestParam(name = "password", required = false) String password,
                              HttpServletRequest req) {
         try {
             if (StringUtils.isBlank(username)) {
-                return new JSONResult(false, "用户名不能为空!");
+                return new ResponseBean(Constants.CODE_ERROR, "用户名不能为空!");
             }
             if (StringUtils.isBlank(password)) {
-                return new JSONResult(false, "密码不能为空!");
+                return new ResponseBean(Constants.CODE_ERROR, "密码不能为空!");
             }
             User user = userService.selectByUserName(username);
             if (user == null) {
-                return new JSONResult(false, "用户不存在!");
+                return new ResponseBean(Constants.CODE_ERROR, "用户不存在!");
             }
             if  (!user.getPassword().equals(passwordEncode(username, password))) {
-                return new JSONResult(false, "密码错误!");
+                return new ResponseBean(Constants.CODE_ERROR, "密码错误!");
             }
-//            HttpSession session = req.getSession();
-//            user.setPassword(null);
-//            session.setAttribute("user", user);
             String token = JWTUtil.sign(username, passwordEncode(username, password));
             JSONObject data = new JSONObject();
             data.put("token", token);
-            return new JSONResult(data, "登录成功!", true);
+            return new ResponseBean(Constants.CODE_SUCCESS, "登录成功!", data);
         } catch (Exception e) {
             log.error("用户登录异常", e);
-            return new JSONResult(false, "用户登录异常:" + e.getMessage());
+            return new ResponseBean(Constants.CODE_ERROR, "用户登录异常:" + e.getMessage());
         }
     }
 
@@ -142,14 +129,17 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/user/logout", method = RequestMethod.POST)
-    public JSONResult login (HttpServletRequest req) {
+    @RequestMapping(value = "/user/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseBean login (HttpServletRequest req) {
         try {
-            SessionUtil.clearSession(req);
-            return new JSONResult(true, "退出登录成功!");
+            Subject subject = SecurityUtils.getSubject();
+            if (subject != null) {
+                subject.logout();
+            }
+            return new ResponseBean(Constants.CODE_SUCCESS, "退出登录成功!");
         } catch (Exception e) {
             log.error("退出登录异常", e);
-            return new JSONResult(false, "退出登录异常:" + e.getMessage());
+            return new ResponseBean(Constants.CODE_SUCCESS, "退出登录异常:" + e.getMessage());
         }
     }
 

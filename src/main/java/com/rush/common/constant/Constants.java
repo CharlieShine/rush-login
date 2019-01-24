@@ -30,4 +30,6 @@ public class Constants {
     public static final String ROLE_ADMIN = "role_admin";
     public static final String ROLE_MEMBER = "role_member";
 
+    public static final int CODE_SUCCESS = 0;
+    public static final int CODE_ERROR = 500;
 }

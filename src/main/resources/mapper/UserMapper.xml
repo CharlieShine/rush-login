@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rush.house.mapper.UserMapper">
+<mapper namespace="com.rush.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.rush.house.entity.User">
+    <resultMap id="BaseResultMap" type="com.rush.entity.User">
         <id column="id" property="id" />
         <result column="insert_time" property="insertTime" />
         <result column="update_time" property="updateTime" />
@@ -12,6 +12,8 @@
         <result column="mobile" property="mobile" />
         <result column="gender" property="gender" />
         <result column="nick" property="nick" />
+        <result column="role" property="role" />
+        <result column="permission" property="permission" />
     </resultMap>
 
 </mapper>

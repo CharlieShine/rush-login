@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.rush</groupId>
-	<artifactId>house</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>house</name>
-	<description>house info show</description>
+	<name>api</name>
+	<description>restful api system</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -51,12 +51,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.12</version>
-			<scope>compile</scope>
-		</dependency>
 		<!--json-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -129,6 +123,16 @@
 			<groupId>xom</groupId>
 			<artifactId>xom</artifactId>
 			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.2.0</version>
 		</dependency>
 
 	</dependencies>

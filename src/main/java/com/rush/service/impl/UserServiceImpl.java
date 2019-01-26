@@ -5,6 +5,8 @@ import com.rush.entity.User;
 import com.rush.mapper.UserMapper;
 import com.rush.service.UserService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.rush.shiro.util.JWTUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return users.get(0);
         }
         return null;
+    }
+
+    @Override
+    public User getUserFromPrincipal() {
+        String token = SecurityUtils.getSubject().getPrincipal().toString();
+        String username = JWTUtil.getUsername(token);
+        User user = this.selectByUserName(username);
+        return user;
     }
 }

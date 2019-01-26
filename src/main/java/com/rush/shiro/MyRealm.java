@@ -1,6 +1,6 @@
 package com.rush.shiro;
 
-import com.rush.common.util.JWTUtil;
+import com.rush.shiro.util.JWTUtil;
 import com.rush.entity.User;
 import com.rush.service.UserService;
 import org.apache.shiro.authc.*;
@@ -20,7 +20,7 @@ import java.util.Set;
 @Service
 public class MyRealm extends AuthorizingRealm {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyRealm.class);
+    private static final Logger log = LoggerFactory.getLogger(MyRealm.class);
 
     private UserService userService;
 
@@ -73,7 +73,7 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.verify(token, username, user.getPassword())) {
+        if (!JWTUtil.verify(token, username, user.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 

@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.service.IService;
 public interface UserService extends IService<User> {
 
     User selectByUserName(String username);
+
+    User getUserFromPrincipal();
 }

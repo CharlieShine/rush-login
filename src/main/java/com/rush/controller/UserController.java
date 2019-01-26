@@ -33,14 +33,9 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/user/register", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseBean register (@RequestParam(name = "username", required = false) String username,
-                                  @RequestParam(name = "password", required = false) String password) {
-        if (StringUtils.isBlank(username)) {
-            return new ResponseBean(Constants.CODE_ERROR, "用户名不能为空!");
-        }
-        if (StringUtils.isBlank(password)) {
-            return new ResponseBean(Constants.CODE_ERROR, "密码不能为空!");
-        }
+    public ResponseBean register (@RequestParam(name = "username") String username,
+                                  @RequestParam(name = "password") String password,
+                                  @RequestParam(name = "role") String role) {
         User user = userService.selectByUserName(username);
         if (user != null) {
             return new ResponseBean(Constants.CODE_ERROR, "用户已存在!");
@@ -48,6 +43,7 @@ public class UserController {
         user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncode(username, password));
+        user.setRole(role);
         userService.insert(user);
         return new ResponseBean(Constants.CODE_SUCCESS, "用户注册成功!");
     }
@@ -60,14 +56,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseBean login (@RequestParam(name = "username", required = false) String username,
-                               @RequestParam(name = "password", required = false) String password) {
-        if (StringUtils.isBlank(username)) {
-            return new ResponseBean(Constants.CODE_ERROR, "用户名不能为空!");
-        }
-        if (StringUtils.isBlank(password)) {
-            return new ResponseBean(Constants.CODE_ERROR, "密码不能为空!");
-        }
+    public ResponseBean login (@RequestParam(name = "username") String username,
+                               @RequestParam(name = "password") String password) {
         User user = userService.selectByUserName(username);
         if (user == null) {
             return new ResponseBean(Constants.CODE_ERROR, "用户不存在!");
